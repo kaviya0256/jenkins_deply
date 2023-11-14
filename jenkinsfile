@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 pipeline {
     agent any
@@ -23,3 +24,29 @@ pipeline {
 																								             }
 																									         }   
 																										 }
+=======
+pipeline {
+    agent any
+
+    stages {
+        stage('SCM') {
+            steps {
+               git branch: 'war', url: 'https://github.com/kaviya0256/jenkins_deply.git'
+            }
+        }
+        stage('Build'){
+         steps{
+                  bat 'mvn clean'
+                  bat 'mvn install'
+                }
+
+          }
+
+           stage('Deployment'){
+         steps{
+                 deploy adapters: [tomcat9(credentialsId: 'web-pipeline', path: '', url: 'http://localhost:8888/')], contextPath: 'demo-pipe', war: '**/*.war'
+                }
+          }
+    }   
+}
+>>>>>>> 5092694caab501c0fb5b61c3c404c5fa63bcd279
